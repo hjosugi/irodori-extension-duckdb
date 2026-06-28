@@ -1,0 +1,226 @@
+{
+  "$schema": "https://irodori.dev/schemas/irodori.extension.schema.json",
+  "manifestVersion": 1,
+  "id": "irodori.duckdb",
+  "name": "DuckDB Connector",
+  "version": "0.1.0",
+  "publisher": "irodori",
+  "description": "DuckDB Connector contributes the DuckDB database connector through the native connector ABI.",
+  "license": "MIT OR 0BSD",
+  "repository": "https://github.com/hjosugi/irodori-extension-duckdb",
+  "apiVersion": "0.1",
+  "runtime": "native",
+  "entry": "dist/native",
+  "permissions": [
+    "connections:read",
+    "connections:write",
+    "queries:run",
+    "metadata:read",
+    "native",
+    "connectors"
+  ],
+  "contributes": {
+    "connectors": [
+      {
+        "id": "duckdb.connector",
+        "engine": "duckdb",
+        "label": "DuckDB",
+        "aliases": [
+          "duckdb",
+          "DuckDB"
+        ],
+        "defaultPort": 0,
+        "wire": "duckdb",
+        "module": "duckdb.driver",
+        "features": [
+          "metadata",
+          "sql",
+          "streaming",
+          "explain"
+        ],
+        "connection": {
+          "schemaVersion": 1,
+          "inferEnvironmentFrom": [
+            "name",
+            "id",
+            "host",
+            "database",
+            "url"
+          ],
+          "compatibility": {
+            "addsRequiredProfileFields": false,
+            "acceptsExistingProfiles": true
+          },
+          "defaults": {
+            "engine": "duckdb",
+            "wire": "duckdb",
+            "port": 0,
+            "readOnly": false
+          },
+          "endpoint": {
+            "modes": [
+              "localFile",
+              "inMemory",
+              "connectionString"
+            ],
+            "defaultPort": 0,
+            "fields": [
+              {
+                "id": "database",
+                "label": "Database file or :memory:",
+                "type": "path",
+                "profileField": "database"
+              }
+            ]
+          },
+          "profileFields": [
+            {
+              "id": "id",
+              "label": "Connection ID",
+              "type": "string",
+              "profileField": "id",
+              "required": true
+            },
+            {
+              "id": "url",
+              "label": "Connection URL or DSN",
+              "type": "uri",
+              "profileField": "url"
+            },
+            {
+              "id": "user",
+              "label": "User",
+              "type": "string",
+              "profileField": "user"
+            },
+            {
+              "id": "database",
+              "label": "Database file or :memory:",
+              "type": "path",
+              "profileField": "database"
+            },
+            {
+              "id": "readOnly",
+              "label": "Read-only connection",
+              "type": "boolean",
+              "profileField": "readOnly",
+              "default": false
+            },
+            {
+              "id": "options",
+              "label": "Driver options",
+              "type": "map",
+              "profileField": "options"
+            }
+          ],
+          "authMethods": [
+            {
+              "id": "none",
+              "label": "No authentication",
+              "kind": "none",
+              "secretPurposes": [],
+              "fields": []
+            },
+            {
+              "id": "connectionString",
+              "label": "Connection string / DSN",
+              "kind": "connectionString",
+              "secretPurposes": [],
+              "fields": [
+                {
+                  "id": "url",
+                  "label": "Connection URL or DSN",
+                  "type": "uri",
+                  "profileField": "url",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "extensionCredential",
+              "label": "Extension or remote storage token",
+              "kind": "token",
+              "secretPurposes": [
+                "token"
+              ],
+              "fields": [
+                {
+                  "id": "token",
+                  "label": "Token",
+                  "type": "secret",
+                  "secretPurpose": "token"
+                }
+              ]
+            },
+            {
+              "id": "customDriverOptions",
+              "label": "Custom driver options",
+              "kind": "custom",
+              "secretPurposes": [
+                "password",
+                "token",
+                "privateKey",
+                "privateKeyPassphrase"
+              ],
+              "fields": [
+                {
+                  "id": "options",
+                  "label": "Driver options",
+                  "type": "map",
+                  "profileField": "options"
+                }
+              ]
+            }
+          ],
+          "secretPurposes": [
+            "token",
+            "password",
+            "privateKey",
+            "privateKeyPassphrase"
+          ],
+          "tls": {
+            "supported": false,
+            "requiredByDefault": false,
+            "modes": [],
+            "fields": []
+          },
+          "transports": [
+            "localFile",
+            "direct"
+          ],
+          "optionNamespaces": [
+            "profile.options",
+            "driver",
+            "tls",
+            "network",
+            "duckdb"
+          ],
+          "customDriverOptions": true
+        }
+      }
+    ]
+  },
+  "capabilities": {
+    "nativeModules": [
+      {
+        "id": "duckdb.driver",
+        "path": "dist/native",
+        "platforms": [
+          "windowsX64",
+          "windowsArm64",
+          "macosX64",
+          "macosArm64",
+          "linuxX64",
+          "linuxArm64"
+        ]
+      }
+    ]
+  },
+  "dev": {
+    "watch": [
+      "src",
+      "connector.config.json",
+      "irodori.extension.json"
+    ]
+  }
+}
