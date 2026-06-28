@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "extensionId": "irodori.duckdb",
+  "visibility": "public",
+  "version": "0.1.0",
+  "connector": {
+    "id": "duckdb.connector",
+    "engine": "duckdb",
+    "label": "DuckDB",
+    "aliases": [
+      "duckdb",
+      "DuckDB"
+    ],
+    "defaultPort": 0,
+    "wire": "duckdb",
+    "module": "duckdb.driver",
+    "features": [
+      "metadata",
+      "sql",
+      "streaming",
+      "explain"
+    ]
+  },
+  "connection": {
+    "endpoint": {
+      "modes": [
+        "localFile",
+        "inMemory",
+        "connectionString"
+      ],
+      "defaultPort": 0,
+      "fields": [
+        {
+          "id": "database",
+          "label": "Database file or :memory:",
+          "type": "path",
+          "profileField": "database"
+        }
+      ]
+    },
+    "authMethods": [
+      "none",
+      "connectionString",
+      "extensionCredential",
+      "customDriverOptions"
+    ],
+    "tls": "disabled",
+    "transports": "localFileDirect",
+    "optionNamespaces": [
+      "duckdb"
+    ],
+    "customDriverOptions": true
+  },
+  "runtime": {
+    "driverLinked": true
+  },
+  "source": {
+    "knowledgeEngineStatus": "verified",
+    "adapter": "db/duck.rs"
+  }
+}
