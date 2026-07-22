@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "extensionId": "irodori.duckdb",
   "visibility": "public",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "connector": {
     "id": "duckdb.connector",
     "engine": "duckdb",
